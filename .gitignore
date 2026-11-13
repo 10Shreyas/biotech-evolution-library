@@ -1,0 +1,6 @@
+codex_run*.log
+CODEX_BRIEF_prototype.md
+PROJECT_CONTEXT.md
+REPORT.md
+.DS_Store
+__pycache__/
