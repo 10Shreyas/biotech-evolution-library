@@ -136,7 +136,8 @@ def main():
                     abstract = europe_pmc_abstract(doi)
                 authors = [a.get('author', {}).get('display_name') for a in w.get('authorships', []) if a.get('author', {}).get('display_name')]
                 journal_url = (w.get('primary_location') or {}).get('landing_page_url') or journal.get('homepage_url')
-                works.append({'title': w.get('title') or '', 'authors': authors, 'journal': name, 'date': w.get('publication_date'), 'doi': doi, 'abstract': abstract, 'oa_url': oa_url, 'license': license_name, 'journal_url': journal_url, 'openalex_id': w.get('id')})
+                primary_topic = w.get('primary_topic') or {}
+                works.append({'title': w.get('title') or '', 'authors': authors, 'journal': name, 'date': w.get('publication_date'), 'doi': doi, 'abstract': abstract, 'oa_url': oa_url, 'license': license_name, 'journal_url': journal_url, 'openalex_id': w.get('id'), 'primary_topic': {key: primary_topic.get(key) for key in ('id', 'display_name', 'field', 'subfield', 'domain') if primary_topic.get(key)}})
             print(f"OpenAlex {name}: {len(data.get('results', []))} works")
         except Exception as e:
             errors.append({'source': f'OpenAlex: {name}', 'url': url, 'error': f'{type(e).__name__}: {e}'})
